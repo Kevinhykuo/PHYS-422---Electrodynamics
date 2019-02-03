@@ -1,0 +1,623 @@
+
+
+
+
+    
+\documentclass[11pt]{article}
+    
+    \usepackage{parskip}
+    \setcounter{secnumdepth}{0} %Suppress section numbers
+    \usepackage[breakable]{tcolorbox}
+    \tcbset{nobeforeafter}
+    \usepackage{needspace}
+    \usepackage{minted}
+    \usemintedstyle{jupyter_python}
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    \let\Oldtex\TeX     % provide compatibility with nbconvert <= 5.3.1
+    \let\Oldlatex\LaTeX % pre-included in nbconvert > 5.3.1 so redundant
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Assignment 2}
+    
+    
+    
+% Pygments definitions
+    
+    \makeatletter
+    \newcommand*\@iflatexlater{\@ifl@t@r\fmtversion}
+    \@iflatexlater{2016/03/01}{
+	    \newcommand{\wordboundary}{4095}}{
+	    \newcommand{\wordboundary}{255}}
+    \makeatother
+
+    \newif\ifcode
+    \codefalse
+    \definecolor{Grey}{rgb}{0.40,0.40,0.40}
+    %If using XeLaTeX, use magic to not highlight . operators with purple.
+    \ifdefined\XeTeXcharclass
+    \XeTeXinterchartokenstate = 1
+    \newXeTeXintercharclass \mycharclassGrey
+    \XeTeXcharclass `. \mycharclassGrey
+    \XeTeXinterchartoks 0 \mycharclassGrey   = {\bgroup\ifcode\color{Grey}\else\fi}
+
+    \XeTeXinterchartoks \wordboundary \mycharclassGrey = {\bgroup\ifcode\color{Grey}\else\fi}
+
+    \XeTeXinterchartoks \mycharclassGrey 0   = {\egroup}
+    \XeTeXinterchartoks \mycharclassGrey \wordboundary = {\egroup}
+    \fi %end magical operator highlighting
+    %End Reconfigured Pygments
+    
+   
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % needed definitions
+    \newif\ifleftmargins
+    \newlength{\promptlength}
+
+    % cell style settings
+        \leftmarginsfalse
+
+    
+    % prompt
+    \newcommand{\prompt}[3]{
+        \needspace{1.1cm}
+        \settowidth{\promptlength}{ #1 [#3] }
+        \ifleftmargins\hspace{-\promptlength}\hspace{-5pt}\fi
+        {\color{#2}#1 [#3]:}
+        \ifleftmargins\vspace{-2.7ex}\fi
+    }
+    
+    
+    % environments
+    \newenvironment{OutVerbatim}{\VerbatimEnvironment%
+        \begin{tcolorbox}[breakable, boxrule=.5pt, size=fbox, pad at break*=1mm, opacityfill=0]
+            \begin{Verbatim}
+            }{
+            \end{Verbatim}
+        \end{tcolorbox}
+    }
+    
+    %Updated MathJax Compatibility (if future behaviour of the notebook changes this may be removed)
+    \renewcommand{\TeX}{\ifmmode \textrm{\Oldtex} \else \textbackslash TeX \fi}
+    \renewcommand{\LaTeX}{\ifmmode \Oldlatex \else \textbackslash LaTeX \fi}
+    
+    % Header Adjustments
+    \renewcommand{\paragraph}{\textbf}
+    \renewcommand{\subparagraph}[1]{\textit{\textbf{#1}}}
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    \geometry{verbose,tmargin=.5in,bmargin=.7in,lmargin=.5in,rmargin=.5in}
+    
+
+    \begin{document}
+    
+    
+    
+    
+    
+
+    
+    \hypertarget{assignment-2}{%
+\section{Assignment 2}\label{assignment-2}}
+
+    
+\prompt{In}{incolor}{1}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+import numpy as np
+import scipy as sp
+import matplotlib as mp
+import matplotlib.pyplot as plt
+
+from scipy.integrate import quad, dblquad
+from textwrap import wrap
+
+%matplotlib inline
+%config InlineBackend.figure_format = 'pdf'
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    \hypertarget{question-5}{%
+\subsection{Question 5}\label{question-5}}
+
+    \hypertarget{a}{%
+\subsubsection{(a)}\label{a}}
+
+We have a loop of radius \(10\)cm lying in the xy-plane with current of
+\(I\) flowing.
+
+To calculate the magnetic field produced by this loop we use the
+Biot-Savart Law:
+
+\[\vec{B}(\vec{r}) = \frac{\mu_0 I}{4 \pi} \int \frac{\text{d}l \times \hat{r'}}{r'^2}\]
+
+\[\text{where} \left\{ \begin{array}{ll}
+            \vec{r}  & \text{is the position vector of the point of evaluation} \\
+            \vec{r'} & \text{is the displacement vector from a point in the current loop to the point of evaluation} \\
+            l        & \text{is the length of the current loop} \\
+            \end{array} \right.\]
+
+    \textbf{Let:}
+
+\begin{quote}
+Radius of the current loop: \(R\)
+\end{quote}
+
+\begin{quote}
+Positions of elements on the loop: \(\vec{R}\)
+\end{quote}
+
+\begin{quote}
+Angle from the center of the current loop to an element: \(\theta\)
+\end{quote}
+
+\begin{quote}
+Line segment of the current loop: \(l\)
+\end{quote}
+
+\begin{quote}
+Locations in space: \(\vec{r} = (x, y, z)\)
+\end{quote}
+
+    \textbf{Then:} \[\vec{R} = [R\cos(\theta),\ y-R\sin(\theta), \ z]\]
+
+\[\text{d}l = R \ \text{d} \theta \ \hat{\theta} = [-R \sin(\theta), \ R \cos(\theta), \ 0] \ \text{d}\theta\]
+
+\[\vec{r'} = \vec{r} - \vec{R} = [x-R\cos(\theta), \ y-R\sin(\theta), \ z]\]
+
+\textbf{Taking the cross product:} \begin{align}
+\text{d}l \times \vec{r'} &= zR\cos(\theta) \ \hat{x} + zR\sin(\theta) \ \hat{y} + [-R\sin(\theta)(y-R\sin(\theta)) - R\cos(\theta)(x-R\cos(\theta))] \ \hat{z} \ \text{d}\theta\\
+&= zR\cos(\theta) \ \hat{x} + zR\sin(\theta) \ \hat{y} + [-yR\sin(\theta)-xR\cos(\theta) + R^2] \hat{z} \ \text{d}\theta 
+\end{align}
+
+\textbf{The term inside the intergral:} \begin{align}
+\frac{\text{d}l \times \vec{r'}}{r'^2} &= \frac{zR\cos(\theta) \ \hat{x} + zR\sin(\theta) \ \hat{y} + [-yR\sin(\theta)-xR\cos(\theta) + R^2] \hat{z}}{\left\{[x-R\cos(\theta)]^2 + [y-R\sin(\theta)]^2 + z^2 \right\}^\frac{3}{2}}
+\end{align}
+
+\textbf{The magnetic field:}
+\[\vec{B}(\vec{r}) = \frac{\mu_0 I}{4 \pi} \int \text{d}\theta \ \frac{zR\cos(\theta) \ \hat{x} + zR\sin(\theta) \ \hat{y} + [-yR\sin(\theta)-xR\cos(\theta) + R^2] \hat{z}}{\left\{[x-R\cos(\theta)]^2 + [y-R\sin(\theta)]^2 + z^2 \right\}^\frac{3}{2} }\]
+
+\textbf{Make it dimensionless:}
+\[\vec{B}(\vec{r}) \frac{4 \pi}{\mu_0 I}  = \int \text{d}\theta \ \frac{\frac{z}{R}\cos(\theta) \ \hat{x} + \frac{z}{R}\sin(\theta) \ \hat{y} - \left[\frac{y}{R}\sin(\theta) + \frac{x}{R}\cos(\theta) - 1\right] \hat{z}}{\left\{ \left[\frac{x}{R}-\cos(\theta)\right]^2 + \left[\frac{y}{R}-\sin(\theta)\right]^2 + \left(\frac{z}{R}\right)^2 \right\}^\frac{3}{2} }\]
+
+    \textbf{Turn the magnetic field into code:}
+
+    
+\prompt{In}{incolor}{2}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+# Magnetic fields in x
+def integrand_x(x, y, z, theta, R=1):
+    r = ((x/R - np.cos(theta))**2 + (y/R - np.sin(theta))**2 + (z/R)**2)**.5
+    Bx = (z/R)*np.cos(theta) / r**3
+    return Bx
+
+@np.vectorize
+def Bx(x, y, z, R=1):
+    B_x = quad(lambda theta: integrand_x(x, y, z, theta, R), 0, 2*np.pi)
+    return B_x[0]
+
+# Magnetic fields in y
+def integrand_y(x, y, z, theta, R=1):
+    r = ((x/R - np.cos(theta))**2 + (y/R - np.sin(theta))**2 + (z/R)**2)**.5
+    By = (z/R)*np.sin(theta) / r**3
+    return By
+
+@np.vectorize
+def By(x, y, z, R=1):
+    B_y = quad(lambda theta: integrand_y(x, y, z, theta, R), 0, 2*np.pi)
+    return B_y[0]
+
+# Magnetic fields in z
+def integrand_z(x, y, z, theta, R=1):
+    r = ((x/R - np.cos(theta))**2 + (y/R - np.sin(theta))**2 + (z/R)**2)**.5
+    Bz = -( (y/R)*np.sin(theta) + (x/R)*np.cos(theta) - 1) / r**3
+    return Bz
+
+@np.vectorize
+def Bz(x, y, z, R=1):
+    B_z = quad(lambda theta: integrand_z(x, y, z, theta, R), 0, 2*np.pi)
+    return B_z[0]
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    
+\prompt{In}{incolor}{3}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+# Create a meshgrid for the space of integration
+# ==============================================
+
+# Dimesions and resolution for the meshgrid 
+r_max = 2
+r_min = -2
+res = 200
+
+x = np.linspace(r_min, r_max, res)
+y = np.linspace(r_min, r_max, res)
+z = np.linspace(r_min, r_max, res)
+
+GX, GY, GZ = np.meshgrid(x, y, z)
+Gx, Gz = np.meshgrid(x, z)
+Gy = y
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    
+\prompt{In}{incolor}{4}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+%%time
+
+# Find the magnetic fields
+# ========================
+
+B_x = Bx(Gx, Gy, Gz, 1)
+B_y = By(Gx, Gy, Gz, 1)
+B_z = Bz(Gx, Gy, Gz, 1)
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+CPU times: user 1min 4s, sys: 49.6 ms, total: 1min 4s
+Wall time: 1min 4s
+
+    \end{Verbatim}
+
+    
+\prompt{In}{incolor}{5}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+# Plot it out
+# ===========
+
+fig, ax = plt.subplots(figsize=(7, 5))
+
+norm = (B_x**2 + B_y**2 + B_z**2)**0.5
+
+Graph = ax.pcolormesh(x, y, norm, cmap='inferno_r', vmax=25)
+ax.streamplot(x, z, B_x, B_z, linewidth=0.75,
+             density=1.5, arrowstyle='->', arrowsize=1)
+
+# ax.quiver(x, z, B_x/norm, B_z/norm, linewidth=0.75, pivot='mid')
+# Graph = ax.imshow(E[2], extent=(-2, 2, -2, 2), vmax=100, cmap='inferno_r')
+
+ax.set_xlim(-2, 2)
+ax.set_ylim(-2, 2)
+ax.set_xlabel(r'Distance ($\hat{x}$) [dm]', fontsize=12)
+ax.set_ylabel(r'Distance ($\hat{z}$) [dm]', fontsize=12)
+ax.set_title('Magnetic field of a current loop in the xz-plane', fontsize=14)
+
+cbar = fig.colorbar(Graph, shrink=1, aspect=20)
+cbar.ax.set_ylabel(r'$\left| \vec{B} \right|$ $\left[\frac{4 \pi}{\mu_0 I}\right]$', 
+                  rotation=0, fontsize=16, labelpad=40)
+
+caption = r"Magnetic field of a current loop located in the xy-plane traveling counterclockwise. The heat map of field magnitude has a max cutoff value at $25 \frac{4 \pi}{\mu_0 I}$ for display purposes, but higher values exist. "
+fig.text(0.05, -0.15, "\n".join(wrap(caption, 75)), ha='left', fontsize=12, wrap=False)
+
+plt.show()
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_0.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \newpage
+
+\hypertarget{b}{%
+\subsubsection{(b)}\label{b}}
+
+Please see attached hand written page for diagram
+
+Here we have a small rotating loop of radius \(5\)cm located \(12\)cm
+away from the original loop on the \(\hat{z}\) axis.
+
+\textbf{Let:}
+
+\begin{quote}
+Radius of the small loop: \(s\)
+\end{quote}
+
+\begin{quote}
+Position of elements in the small loop: \(\vec{S}\)
+\end{quote}
+
+\begin{quote}
+Distance of the small loop from the original loop: \(z_0 \ \hat{z}\)
+\end{quote}
+
+\begin{quote}
+Rate at which the small loop is rotating: \(\omega t \ \hat{x}\)
+\end{quote}
+
+\begin{quote}
+Radial unit vector in the small loop: \(\hat{s}\)
+\end{quote}
+
+\begin{quote}
+Azimuthal angle between the \(x\)-axis and \(\hat{s}\): \(\phi\)
+\end{quote}
+
+\begin{quote}
+Normal vector to the surface enclosed by the small current loop:
+\(\hat{n}\)
+\end{quote}
+
+\begin{quote}
+Polar angle between \(\hat{n}\) and the \(z\)-axis: \(\varphi\)
+\end{quote}
+
+\begin{quote}
+Displacement vector from an element in the original loop to an element
+in the small loop: \(\vec{r''}\)
+\end{quote}
+
+From inspecting the diagram, we can see that:
+
+\begin{quote}
+\(\hat{s} = \cos{\phi}\hat{x} + \sin{\phi}\sin{\varphi} \hat{y} + \sin{\phi}\cos{\varphi} \hat{z}\)
+\end{quote}
+
+\begin{quote}
+\(\hat{n} = \sin{\varphi}\hat{y} + \cos{\varphi}\hat{z}\)
+\end{quote}
+
+\begin{quote}
+\(\vec{S} = S\cos{\phi}\hat{x} + S\sin{\phi}\sin{\varphi} \hat{y} + [S\sin{\phi}\cos{\varphi} + z_0] \hat{z}\)
+\end{quote}
+
+\begin{quote}
+\(\vec{r''} = \vec{S} - \vec{R} = [S\cos{\phi} - R\cos{\theta}, \ S\sin{\phi}\sin{\varphi} - R\sin{\theta},\ S\sin{\phi}\cos{\varphi} + z_0]\)
+\end{quote}
+
+Since the loop is rotating along the \(\hat{x}\), we can conclude:
+
+\begin{quote}
+\(\varphi = \omega t\)
+\end{quote}
+
+    \textbf{Current induced in the loop:}
+
+\begin{align}
+I &= \int_0^{2\pi} \int_0^s \vec{B} \cdot \text{d} \vec{a} \\
+  &= \int_0^{2\pi} \int_0^s \vec{B} \cdot \hat{n} \ s \ \text{d}s \ \text{d} \phi
+\end{align}
+
+    Code the current:
+
+    
+\prompt{In}{incolor}{6}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+@np.vectorize
+def B_norm(S, phi, Vphi, z_0=1.2):
+    x = S*np.cos(phi)
+    y = S*np.sin(phi)*np.sin(Vphi)
+    z = S*np.sin(phi)*np.cos(Vphi) + z_0
+    
+    B = np.array([0, By(x, y, z), Bz(x, y, z)])
+    n = np.array([0, np.sin(Vphi), np.cos(Vphi)])
+    
+    Bn = np.dot(B, n)
+    return Bn
+
+@np.vectorize
+def current(R=1, s=0.5, z_0=1.2, Vphi=0.1*np.pi):
+    I = dblquad(lambda phi, S: B_norm(S, phi, Vphi)*S, 0, s, lambda phi: 0, lambda phi: 2*np.pi)
+    return I
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    
+\prompt{In}{incolor}{7}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+VPhi = np.linspace(0, 2*np.pi, 100) 
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    
+\prompt{In}{incolor}{8}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+%%time
+
+I = current(Vphi = VPhi)
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+CPU times: user 5min 24s, sys: 1.21 s, total: 5min 25s
+Wall time: 5min 23s
+
+    \end{Verbatim}
+
+    
+\prompt{In}{incolor}{10}
+\codetrue
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm, colback=cellbackground, colframe=cellborder]
+\begin{minted}[breaklines=True]{ipython3}
+fig2, ax2 = plt.subplots(1, 1, figsize=(8,6))
+
+ax2.plot(VPhi/(2*np.pi), I[0], label='Induced current', zorder=2)
+ax2.plot(VPhi/(2*np.pi), np.max(I)*np.cos(VPhi), label='Cosine wave', linestyle='--', zorder=1)
+ax2.grid()
+
+ax2.set_xlabel(r'Time [s]', fontsize=14)
+ax2.set_ylabel(r'Induced current $(I_{ind})$ $\left[\frac{4 \pi}{\mu_0 I s^2}\right]$', fontsize=14)
+title2 = r'Induced current in the small loop above the current loop rotating at $2 \pi$ rad/s'
+ax2.set_title("\n".join(wrap(title2, 60)), fontsize=16)
+
+plt.show()
+\end{minted}
+\end{tcolorbox}
+\codefalse
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_17_0.pdf}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
